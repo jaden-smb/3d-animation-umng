@@ -6,11 +6,11 @@ end_pos = 0
 ball = cmds.polySphere(r=1, sx=20, sy=20, ax=(0, 1, 0), cuv=2, ch=1)[0]
 
 # Set the total frames for the animation
-total_frames = 24 * 5  # 24 fps * 5 seconds
+total_frames = 24 * 2  # 24 fps * 5 seconds
 extra_frames = 24 * 2  # 24 fps * 2 seconds for the exaggeration phase
 
 # Set the keyframes for the ball's position
-for i in range(0, total_frames + extra_frames, 10):  # Set a keyframe every 4 frames
+for i in range(0, total_frames + extra_frames, 1):  # Set a keyframe every 4 frames
     time = i
     # Calculate the current position of the ball
     if time < total_frames:
@@ -38,3 +38,8 @@ for i in range(0, total_frames + extra_frames, 10):  # Set a keyframe every 4 fr
         cmds.setKeyframe(ball, attribute='scaleY', v=1/squash, t=time)
         cmds.setKeyframe(ball, attribute='scaleX', v=squash, t=time)
         cmds.setKeyframe(ball, attribute='scaleZ', v=squash, t=time)
+
+# After the for loop
+cmds.setKeyframe(ball, attribute='scaleY', v=1, t=total_frames + extra_frames)
+cmds.setKeyframe(ball, attribute='scaleX', v=1, t=total_frames + extra_frames)
+cmds.setKeyframe(ball, attribute='scaleZ', v=1, t=total_frames + extra_frames)
