@@ -10,7 +10,7 @@ total_frames = 24 * 5  # 24 fps * 5 seconds
 extra_frames = 24 * 2  # 24 fps * 2 seconds for the exaggeration phase
 
 # Set the keyframes for the ball's position
-for i in range(0, total_frames + extra_frames):
+for i in range(0, total_frames + extra_frames, 10):  # Set a keyframe every 4 frames
     time = i
     # Calculate the current position of the ball
     if time < total_frames:
