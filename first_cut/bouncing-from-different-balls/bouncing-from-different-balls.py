@@ -29,23 +29,26 @@ cmds.xform(pingpong, piv=(0, -0.3, 0))
 
 # Define a function to animate a series of bounces
 def animate_bounce(ball, start_frame, initial_height, bounce_duration, cor, ground_position):
+    # Add a non-linear squash deformer to the ball
+    squash_deformer, squash_handle = cmds.nonLinear(ball, type='squash', lowBound=-1, highBound=1)
+    
+    # Parent the deformer handle to the ball so it follows the ball's movement
+    cmds.parent(squash_handle, ball)
+    
     height = initial_height
     frame = start_frame
     while height > ground_position:  # Stop when the bounce height is very small
         # Set keyframe at peak
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame)
-        cmds.setKeyframe(ball, attribute='scaleX', v=1, t=frame)
-        cmds.setKeyframe(ball, attribute='scaleY', v=1, t=frame)
+        cmds.setKeyframe(squash_deformer, attribute='factor', v=0, t=frame)  # No squash or stretch
         
         # Set keyframe at ground contact
         cmds.setKeyframe(ball, attribute='translateY', v=ground_position, t=frame + bounce_duration / 2)
-        cmds.setKeyframe(ball, attribute='scaleX', v=1.3, t=frame + bounce_duration / 2)  # Squash
-        cmds.setKeyframe(ball, attribute='scaleY', v=0.7, t=frame + bounce_duration / 2)  # Squash
+        cmds.setKeyframe(squash_deformer, attribute='factor', v=-0.3, t=frame + bounce_duration / 2)  # Squash
         
         # Set keyframe at peak again
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame + bounce_duration)
-        cmds.setKeyframe(ball, attribute='scaleX', v=1, t=frame + bounce_duration)  # Stretch
-        cmds.setKeyframe(ball, attribute='scaleY', v=1, t=frame + bounce_duration)  # Stretch
+        cmds.setKeyframe(squash_deformer, attribute='factor', v=0, t=frame + bounce_duration)  # Stretch
         
         # Prepare for the next bounce
         height *= cor  # Each bounce reaches a percentage of the previous height
