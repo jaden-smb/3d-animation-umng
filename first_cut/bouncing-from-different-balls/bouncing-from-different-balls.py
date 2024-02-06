@@ -34,22 +34,28 @@ def animate_bounce(ball, start_frame, initial_height, bounce_duration, cor, grou
     while height > ground_position:  # Stop when the bounce height is very small
         # Set keyframe at peak
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame)
+        cmds.setKeyframe(ball, attribute='scaleX', v=1, t=frame)
+        cmds.setKeyframe(ball, attribute='scaleY', v=1, t=frame)
         
         # Set keyframe at ground contact
         cmds.setKeyframe(ball, attribute='translateY', v=ground_position, t=frame + bounce_duration / 2)
+        cmds.setKeyframe(ball, attribute='scaleX', v=1.3, t=frame + bounce_duration / 2)  # Squash
+        cmds.setKeyframe(ball, attribute='scaleY', v=0.7, t=frame + bounce_duration / 2)  # Squash
         
         # Set keyframe at peak again
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame + bounce_duration)
+        cmds.setKeyframe(ball, attribute='scaleX', v=1, t=frame + bounce_duration)  # Stretch
+        cmds.setKeyframe(ball, attribute='scaleY', v=1, t=frame + bounce_duration)  # Stretch
         
         # Prepare for the next bounce
         height *= cor  # Each bounce reaches a percentage of the previous height
         frame += bounce_duration  # Move to the next time frame
 
 # Animate the basketball bouncing
-animate_bounce(basketball, start_frame=1, initial_height=10, bounce_duration=50, cor=0.75, ground_position=0.9)
+animate_bounce(basketball, start_frame=1, initial_height=14, bounce_duration=50, cor=0.75, ground_position=0.9)
 
 # Animate the football bouncing
 animate_bounce(football, start_frame=1, initial_height=10, bounce_duration=50, cor=0.6, ground_position=0.71)
 
 # Animate the ping pong ball bouncing
-animate_bounce(pingpong, start_frame=1, initial_height=10, bounce_duration=50, cor=0.9, ground_position=0.285)
+animate_bounce(pingpong, start_frame=1, initial_height=10, bounce_duration=50, cor=0.8, ground_position=0.285)
