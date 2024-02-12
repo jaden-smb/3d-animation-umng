@@ -57,6 +57,7 @@ def animate_bounce(ball, start_frame, initial_height, bounce_duration, cor, grou
         # Prepare for the next bounce
         height *= cor  # Each bounce reaches a percentage of the previous height
         frame += bounce_duration  # Move to the next time frame
+        bounce_duration *= cor  # Each bounce takes a percentage of the previous durations
 
 # Animate the basketball bouncing
 animate_bounce(basketball, start_frame=1, initial_height=14, bounce_duration=12, cor=0.75, ground_position=0.9)
