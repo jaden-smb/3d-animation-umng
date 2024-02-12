@@ -1,47 +1,26 @@
-## stretch-and-squash-ball
+## stretch-and-squash-ball-axis-bounding 
 
-This Python script is used to animate a bouncing ball in Maya, a 3D computer graphics application. The animation includes the "stretch and squash" principle, which is a common technique in animation to give more life and flexibility to animated objects.
+This Python script is used to create a bouncing ball animation in Maya, a 3D computer graphics application. The script uses Maya's command language (Maya commands or maya.cmds) to create and manipulate 3D objects and their animations.
 
-Here's a breakdown of what the code does:
+Here's a breakdown of the functions:
 
-It imports the maya.cmds module, which is a Python interface to Maya commands.
+create_ball_and_rig(): This function creates a sphere (the ball) and a group (the rig) that will be used to control the ball. The ball is parented to the rig, and the rig's pivot point is set to the center of the ball.
 
-It sets the initial and end positions of the ball (start_pos and end_pos).
+apply_squash_deformer(rig): This function applies a 'squash' deformer to the rig. This deformer will be used to squash and stretch the ball during the animation.
 
-It creates a sphere (ball) using the polySphere command.
+set_initial_position(rig): This function sets the initial position of the rig (and therefore the ball) in the scene.
 
-It sets the total frames for the animation (total_frames) and extra frames for the exaggeration phase (extra_frames).
+move_squash_pivot(squash, ball_center): This function moves the pivot point of the squash deformer to the bottom of the ball.
 
-It then enters a loop for each frame of the animation.
+set_falling_and_bouncing_keyframes(rig, squash, bounce_times, bounce_heights, squash_factors): This function sets keyframes for the rig's Y position and the squash deformer's factor to simulate the ball falling and bouncing. The ball's Y position and squash factor are animated over time according to the provided bounce times, bounce heights, and squash factors.
 
-For each frame, it calculates the current position of the ball. If the current time is less than the total frames, it calculates the position based on a quadratic easing function. Otherwise, the position is set to the end position.
+set_forward_movement_keyframes(rig): This function sets keyframes for the rig's X position to simulate the ball moving forward during the animation.
 
-It sets a keyframe for the ball's position at the current frame using the setKeyframe command.
+set_rotation_keyframes(rig, bounce_times, rotation_amount): This function sets keyframes for the rig's rotation to simulate the ball rotating during the falling and in-air phases of the animation.
 
-It calculates the "squash and stretch" of the ball. If the ball is in the air (position > end position + 1), it stretches the ball along the Y axis and shrinks it along the X and Z axes. If the ball is on the ground, it squashes the ball along the X axis and stretches it along the Y axis. The amount of squash and stretch gradually changes over time.
+set_continued_movement_and_rotation_keyframes(rig, bounce_times, rotation_amount): This function sets keyframes for the rig to continue moving and rotating after the last bounce.
 
-After the loop, it sets the final keyframes for the ball's scale to return it to its original shape.
+The main() function combines all these steps to create the full animation. It first defines some parameters for the animation (bounce times, bounce heights, squash factors, and rotation amount), then it creates the ball and rig, applies the squash deformer, sets the initial position, moves the squash pivot, and sets the keyframes for the falling and bouncing, forward movement, rotation, and continued movement and rotation.
 
-This script creates a bouncing ball animation where the ball stretches as it rises and squashes as it hits the ground, giving the animation a more dynamic and realistic feel.
 
-## stretch-and-squash-ball-axis-bounding
 
-This Python script is used to animate a bouncing ball in Maya, a 3D computer graphics application. The animation includes the "stretch and squash" principle, which is a common technique in animation to give more life and flexibility to animated objects.
-
-Here's a breakdown of what the code does:
-
-It imports the maya.cmds module, which is a Python interface to Maya commands.
-
-It creates a sphere (ball) using the polySphere command and sets its initial position higher up.
-
-It sets keyframes for the ball's Y position to simulate falling and bouncing. The ball will fall to the ground over the course of 1 second (24 frames at 24 fps), then it will bounce 4 times over the next 9 seconds (216 frames). The times and heights of the bounces are stored in bounce_times and bounce_heights.
-
-It sets keyframes for the start and end of the fall. Then, for each bounce, it sets a keyframe for when the ball hits the ground and a keyframe for the peak of the bounce.
-
-It sets keyframes for the ball's X position to simulate forward motion. The ball will move steadily in the X direction over the course of the animation.
-
-It sets keyframes for the ball's scale to simulate squash and stretch. The ball will squash when it hits the ground and stretch in the air. The amount of squash and stretch gradually changes over time.
-
-After the loop, it sets the final keyframes for the ball's scale to return it to its original shape.
-
-This script creates a bouncing ball animation where the ball stretches as it rises and squashes as it hits the ground, giving the animation a more dynamic and realistic feel.
