@@ -38,7 +38,7 @@ def set_falling_and_bouncing_keyframes(rig, squash, bounce_times, bounce_heights
         cmds.setKeyframe(rig, attribute='translateY', time=peak_time, value=bounce_heights[i+1])
         cmds.setKeyframe(squash[0], attribute='factor', time=bounce_times[i], value=squash_factors[i])
         cmds.setKeyframe(squash[0], attribute='factor', time=peak_time, value=0)
-        cmds.keyTangent(squash[0], attribute='factor', time=(bounce_times[i],), inTangentType='linear', outTangentType='linear')
+        cmds.keyTangent(squash[0], attribute='factor', time=(bounce_times[i - 1],), inTangentType='linear', outTangentType='linear')
 
     cmds.setKeyframe(rig, attribute='translateY', time=bounce_times[-1], value=0)
     cmds.setKeyframe(squash[0], attribute='factor', time=bounce_times[-1], value=squash_factors[-1])

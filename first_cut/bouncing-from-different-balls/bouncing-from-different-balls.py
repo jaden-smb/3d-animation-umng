@@ -41,24 +41,28 @@ def animate_bounce(ball, start_frame, initial_height, bounce_duration, cor, grou
         # Set keyframe at peak
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame)
         cmds.setKeyframe(squash_deformer, attribute='factor', v=0, t=frame)  # No squash or stretch
-        
+
         # Set keyframe at ground contact
         cmds.setKeyframe(ball, attribute='translateY', v=ground_position, t=frame + bounce_duration / 2)
         cmds.setKeyframe(squash_deformer, attribute='factor', v=-0.3, t=frame + bounce_duration / 2)  # Squash
         
+        # Break the tangents of the animation curve 
+        cmds.keyTangent(ball, attribute='translateY', time=(frame + bounce_duration / 2, frame + bounce_duration / 2), inTangentType='linear', outTangentType='linear')
+        cmds.keyTangent(squash_deformer, attribute='factor', time=(frame + bounce_duration / 2, frame + bounce_duration / 2), inTangentType='linear', outTangentType='linear')
+
         # Set keyframe at peak again
         cmds.setKeyframe(ball, attribute='translateY', v=height, t=frame + bounce_duration)
         cmds.setKeyframe(squash_deformer, attribute='factor', v=0, t=frame + bounce_duration)  # Stretch
-        
+
         # Prepare for the next bounce
         height *= cor  # Each bounce reaches a percentage of the previous height
         frame += bounce_duration  # Move to the next time frame
 
 # Animate the basketball bouncing
-animate_bounce(basketball, start_frame=1, initial_height=14, bounce_duration=50, cor=0.75, ground_position=0.9)
+animate_bounce(basketball, start_frame=1, initial_height=14, bounce_duration=12, cor=0.75, ground_position=0.9)
 
 # Animate the football bouncing
-animate_bounce(football, start_frame=1, initial_height=10, bounce_duration=50, cor=0.6, ground_position=0.71)
+animate_bounce(football, start_frame=1, initial_height=10, bounce_duration=12, cor=0.6, ground_position=0.71)
 
 # Animate the ping pong ball bouncing
-animate_bounce(pingpong, start_frame=1, initial_height=10, bounce_duration=50, cor=0.8, ground_position=0.285)
+animate_bounce(pingpong, start_frame=1, initial_height=10, bounce_duration=12, cor=0.8, ground_position=0.285)
